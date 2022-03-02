@@ -6,7 +6,7 @@ from tensorflow.keras.layers import MaxPooling2D, AveragePooling2D
 from tensorflow.keras.layers import Concatenate
 from tensorflow.keras.layers import Lambda, Flatten, Dense
 from tensorflow.keras.initializers import glorot_uniform
-from tensorflow.keras.engine.topology import Layer
+from tensorflow.keras.layers import Layer
 from tensorflow.keras import backend as K
 K.set_image_data_format('channels_first')
 import cv2
@@ -15,14 +15,14 @@ import numpy as np
 from numpy import genfromtxt
 import pandas as pd
 import tensorflow as tf
-from fnet.fr_utils import *
-from fnet.inception_blocks_v2 import *
+from fr_utils import *
+from inception_blocks_v2 import *
 import imutils
 from tensorflow.keras.models import model_from_json
-from fnet.datagenerator import *
+from datagenerator import *
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 import time
-from fnet.params import *
+from params import *
 
 def triplet_loss(y_true, y_pred, alpha = ALPHA):
     anchor, positive, negative = y_pred[0], y_pred[1], y_pred[2]
