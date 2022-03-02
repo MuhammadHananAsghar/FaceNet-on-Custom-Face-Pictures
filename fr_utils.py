@@ -7,8 +7,8 @@ import cv2
 from numpy import genfromtxt
 from tensorflow.keras.layers import Conv2D, ZeroPadding2D, Activation, Input, concatenate
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers.normalization import BatchNormalization
-from tensorflow.keras.layers.pooling import MaxPooling2D, AveragePooling2D
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import MaxPooling2D, AveragePooling2D
 import h5py
 import matplotlib.pyplot as plt
 
