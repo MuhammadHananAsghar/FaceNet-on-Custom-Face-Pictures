@@ -44,6 +44,8 @@ if best_model_path != None and os.path.exists(best_model_path):
     
 else:
     print('Saved model not found, loading untrained FaceNet')
+    FRmodel = faceRecoModel(input_shape=(3, IMAGE_SIZE, IMAGE_SIZE))
+    load_weights_from_FaceNet(FRmodel)
 
 for layer in FRmodel.layers[0: LAYERS_TO_FREEZE]:
     layer.trainable  =  False
