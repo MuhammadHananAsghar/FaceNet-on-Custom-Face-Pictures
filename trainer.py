@@ -77,7 +77,7 @@ tripletModel = Model(inputs=[A, P, N], outputs=[enc_A, enc_P, enc_N])
 tripletModel.compile(optimizer = 'adam', loss = triplet_loss)
 
 gen = batch_generator(BATCH_SIZE)
-tripletModel.fit_generator(gen, epochs=NUM_EPOCHS, callbacks=[early_stopping, tensorboard])
+tripletModel.fit(gen, epochs=NUM_EPOCHS, steps_per_epoch=STEPS_PER_EPOCH, callbacks=[early_stopping, tensorboard])
 
 FRmodel.save(bst_model_path)
 with open('bestmodel.txt','w') as file:
