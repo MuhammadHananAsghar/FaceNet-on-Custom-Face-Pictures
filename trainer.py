@@ -1,10 +1,10 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, ZeroPadding2D, Activation, Input, concatenate
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers.normalization import BatchNormalization
-from tensorflow.keras.layers.pooling import MaxPooling2D, AveragePooling2D
-from tensorflow.keras.layers.merge import Concatenate
-from tensorflow.keras.layers.core import Lambda, Flatten, Dense
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import MaxPooling2D, AveragePooling2D
+from tensorflow.keras.layers import Concatenate
+from tensorflow.keras.layers import Lambda, Flatten, Dense
 from tensorflow.keras.initializers import glorot_uniform
 from tensorflow.keras.engine.topology import Layer
 from tensorflow.keras import backend as K
@@ -15,14 +15,14 @@ import numpy as np
 from numpy import genfromtxt
 import pandas as pd
 import tensorflow as tf
-from fr_utils import *
-from inception_blocks_v2 import *
+from fnet.fr_utils import *
+from fnet.inception_blocks_v2 import *
 import imutils
 from tensorflow.keras.models import model_from_json
-from datagenerator import *
+from fnet.datagenerator import *
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 import time
-from params import *
+from fnet.params import *
 
 def triplet_loss(y_true, y_pred, alpha = ALPHA):
     anchor, positive, negative = y_pred[0], y_pred[1], y_pred[2]
@@ -40,12 +40,10 @@ if os.path.exists("./bestmodel.txt"):
     
 if best_model_path != None and os.path.exists(best_model_path):
     ("Pre trained model found")
-    FRmodel = keras.models.load_model(best_model_path, custom_objects={'triplet_loss': triplet_loss})
+    FRmodel = tensorflow.keras.models.load_model(best_model_path, custom_objects={'triplet_loss': triplet_loss})
     
 else:
     print('Saved model not found, loading untrained FaceNet')
-    FRmodel = faceRecoModel(input_shape=(3, IMAGE_SIZE, IMAGE_SIZE))
-    load_weights_from_FaceNet(FRmodel)
 
 for layer in FRmodel.layers[0: LAYERS_TO_FREEZE]:
     layer.trainable  =  False
@@ -77,7 +75,7 @@ tripletModel = Model(input=[A, P, N], output=[enc_A, enc_P, enc_N])
 tripletModel.compile(optimizer = 'adam', loss = triplet_loss)
 
 gen = batch_generator(BATCH_SIZE)
-tripletModel.fit_generator(gen, epochs=NUM_EPOCHS,steps_per_epoch=STEPS_PER_EPOCH,callbacks=[early_stopping, tensorboard])
+tripletModel.fit_generator(gen, epochs=NUM_EPOCHS, callbacks=[early_stopping, tensorboard])
 
 FRmodel.save(bst_model_path)
 with open('bestmodel.txt','w') as file:
