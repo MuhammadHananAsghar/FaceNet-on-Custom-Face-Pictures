@@ -5,10 +5,10 @@ from numpy import genfromtxt
 from tensorflow.keras import backend as K
 from tensorflow.keras.layers import Conv2D, ZeroPadding2D, Activation, Input, concatenate
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers.normalization import BatchNormalization
-from tensorflow.keras.layers.pooling import MaxPooling2D, AveragePooling2D
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import MaxPooling2D, AveragePooling2D
 import fr_utils
-from tensorflow.keras.layers.core import Lambda, Flatten, Dense
+from tensorflow.keras.layers import Lambda, Flatten, Dense
 
 def inception_block_1a(X):
     """
