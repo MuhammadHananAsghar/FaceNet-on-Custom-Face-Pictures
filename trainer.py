@@ -73,7 +73,7 @@ bst_model_path = checkpoint_dir + STAMP + '.h5'
 tensorboard = TensorBoard(log_dir=checkpoint_dir + "logs/{}".format(time.time()))
 
 # Model
-tripletModel = Model(input=[A, P, N], output=[enc_A, enc_P, enc_N])
+tripletModel = Model(inputs=[A, P, N], outputs=[enc_A, enc_P, enc_N])
 tripletModel.compile(optimizer = 'adam', loss = triplet_loss)
 
 gen = batch_generator(BATCH_SIZE)
